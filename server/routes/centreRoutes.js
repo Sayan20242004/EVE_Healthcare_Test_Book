@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
+import { asyncHandler } from '../utils/asyncHandler.js';
+import { requireAuth } from '../middleware/auth.js';
+import { getCentre, searchCentres } from '../controllers/centreController.js';
+const router = Router();
+router.use(requireAuth);
+router.use(rateLimit({ windowMs: 60 * 1000, limit: 120 }));
+router.get('/search', asyncHandler(searchCentres));
+router.get('/:id', asyncHandler(getCentre));
+export default router;

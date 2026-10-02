@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { asyncHandler } from '../utils/asyncHandler.js';
+import { requireAuth } from '../middleware/auth.js';
+import { cancelBooking, createBooking, getBooking, myBookings } from '../controllers/bookingController.js';
+const router = Router();
+router.use(requireAuth);
+router.post('/', asyncHandler(createBooking));
+router.get('/my', asyncHandler(myBookings));
+router.get('/:id', asyncHandler(getBooking));
+router.patch('/:id/cancel', asyncHandler(cancelBooking));
+export default router;
